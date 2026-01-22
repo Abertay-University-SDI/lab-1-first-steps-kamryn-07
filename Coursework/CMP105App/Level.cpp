@@ -8,6 +8,7 @@ Level::Level(sf::RenderWindow& hwnd, Input& in) :
 	m_snake.setRadius(10);
 	m_snake.setFillColor(sf::Color::Yellow);
 	m_snake.setPosition({10,10});
+	m_last_pressed_direction = Direction::RIGHT;
 }
 
 // handle user input
@@ -35,6 +36,14 @@ void Level::handleInput(float dt)
 	{
 		m_last_pressed_direction = Direction::RIGHT;
 	}
+
+}
+
+// Update game objects
+void Level::update(float dt)
+{
+
+	// sustained movement
 	switch (m_last_pressed_direction)
 	{
 	case Level::Direction::UP:
@@ -61,16 +70,11 @@ void Level::handleInput(float dt)
 	{
 		m_snake.setPosition({ window_size.x * 0.5f, window_size.y * 0.5f });
 	}
-	if (pos.y + radius * 2 < 0 || pos.y > window_size.y)
+	if (pos.y < 0 || pos.y + radius * 2 > window_size.y)
 	{
 		m_snake.setPosition({ window_size.x * 0.5f, window_size.y * 0.5f });
 	}
 
-}
-
-// Update game objects
-void Level::update(float dt)
-{
 }
 
 // Render level
